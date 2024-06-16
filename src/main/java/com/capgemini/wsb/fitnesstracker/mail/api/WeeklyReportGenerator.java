@@ -21,14 +21,14 @@ public class WeeklyReportGenerator {
     @Autowired
     private EmailService emailService;
 
-    @Scheduled(cron = "0 0 0 * * MON")
+    @Scheduled(cron = "0 0 0 */14 * ?")
     public void generateWeeklyReports() {
         List<User> users = getAllUsers();
         generateWeeklyReports(users);
     }
 
     public void generateWeeklyReports(List<User> users) {
-        LocalDate startDate = LocalDate.now().minusWeeks(1).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate startDate = LocalDate.now().minusWeeks(2).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate endDate = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
 
         for (User user : users) {
